@@ -31,6 +31,15 @@
             <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
                 <ul class="nav navbar-nav navbar-right">
                     <g:pageProperty name="page.nav" />
+
+%{--                    Boutons login / logout--}%
+                    <sec:ifNotLoggedIn>
+                        <g:link controller="login" action="auth"><button type="button" class="btn btn-primary">Login</button></g:link>
+                    </sec:ifNotLoggedIn>
+                    <sec:ifLoggedIn>
+                        <g:link controller="logout" action="index"><button type="button" class="btn btn-danger">Logout</button></g:link>
+                    </sec:ifLoggedIn>
+
                 </ul>
             </div>
         </div>
