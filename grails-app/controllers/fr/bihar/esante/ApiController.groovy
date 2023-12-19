@@ -13,14 +13,17 @@ class ApiController {
      */
     def user()
     {
+        // Avant de commencer on récupère l'utilisateur sur lequel on va travailler
+        // et on vérifie que l'utilisateur ne soit pas null
+        if (!params.id)
+            return response.status = 400
+        User userInstance = User.get(params.id)
+        if (!userInstance)
+            return response.status = 404
+
         switch (request.getMethod())
         {
             case "GET":
-                if (!params.id)
-                    return response.status = 400
-                User userInstance = User.get(params.id)
-                if (!userInstance)
-                    return response.status = 404
                 renderThis(userInstance, request.getHeader("Accept"))
                 break
             case "PUT":
