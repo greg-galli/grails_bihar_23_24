@@ -7,6 +7,8 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured('ROLE_ADMIN')
 class ApiController {
 
+    UserService userService
+
     /**
      * Répondra à l'appel sur /api/user/{id}
      * Devra gérer les requête de type GET, PUT, PATCH, DELETE*/
@@ -34,7 +36,18 @@ class ApiController {
                     return
                 }
 
-                render "ok"
+//                userInstance.username = paramz.username
+//                userInstance.password = paramz.password
+                userInstance.properties = paramz
+
+                // Ne fonctionnera pas dans un contrôleur
+//                userInstance.save()
+                // Fonctionne mais il vaut mieux faire autrement
+//                userInstance.save(flush: true)
+                // Bonne solution
+                userService.save(userInstance)
+
+                renderThis(userInstance, request.getHeader("Accept"))
                 break
             case "PATCH":
                 break
