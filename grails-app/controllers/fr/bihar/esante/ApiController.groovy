@@ -27,6 +27,20 @@ class ApiController {
                 renderThis(userInstance, request.getHeader("Accept"))
                 break
             case "PUT":
+            def paramz
+            // request.getJSON() contiendra les paramètres contenu dans le body si la requête est formatée en JSON
+            if (request.getHeader('Content-Type')) {
+                if (request.getHeader('Content-Type').contains("json"))
+                    paramz = request.getJSON()
+                else if (request.getHeader('Content-Type').contains("xml"))
+                    paramz = request.getXML()
+            }
+
+            if (!paramz)
+                render(status: 400, text: [status: 400, message: "Missing parameters in body"] as JSON)
+                return
+
+            render "ok"
                 break
             case "PATCH":
                 break
